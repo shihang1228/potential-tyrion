@@ -11,6 +11,6 @@ public class ContactServlet extends HttpServlet
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) 
 	                  throws IOException,ServletException
 		{
-			resp.getWriter().println("welcome to Contact!!!");
+			resp.getWriter().println("get contact by id:" + req.getParameter("contactId"));
 		}
 }
