@@ -38,7 +38,7 @@ public class ContactServlet extends HttpServlet
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=utf-8");
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select * from contact where id=1");
+				rs = stmt.executeQuery("select * from contact where id=" + req.getParameter("contactId"));
 				rs.next();
 				resp.getWriter().println(rs.getString("name"));
 			}
