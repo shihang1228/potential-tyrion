@@ -49,6 +49,39 @@ public class ContactServlet extends HttpServlet
 				sqle.printStackTrace();
 			}
 			
+			if(rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch(SQLException sqle)
+				{
+					
+				}
+			}
+			if(stmt != null)
+			{
+				try
+				{
+					stmt.close();
+				}
+				catch(SQLException sqle)
+				{
+					
+				}
+			}
+			if(conn != null)
+			{
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException sqle)
+				{
+					
+				}
+			}
 		}
 		
 }
