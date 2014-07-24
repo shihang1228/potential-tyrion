@@ -40,80 +40,8 @@ public class ContactServlet extends HttpServlet
 			else
 			{
 				resp.getWriter().println("get contact by id: " + req.getParameter("contactId"));
-				Map contact = new HashMap();
-
-				try
-				{
-					Class.forName("com.mysql.jdbc.Driver").newInstance();
-				}
-				catch(Exception ex)
-				{
-					
-				}
+				Map contact = getContactById(Long.valueOf(req.getParameter("contactId")));
 				
-				Connection conn = null;
-				Statement stmt = null;
-				ResultSet rs = null;
-				
-				try
-				{
-					conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=utf-8");
-					stmt = conn.createStatement();
-					rs = stmt.executeQuery("select * from contact where id=" + req.getParameter("contactId"));
-					if(rs.next())
-					{
-						contact.put("id", rs.getLong("id"));
-						contact.put("name", rs.getString("name"));
-						contact.put("mobile", rs.getString("mobile"));
-						contact.put("vpmn", rs.getString("vpmn"));
-						contact.put("email", rs.getString("email"));
-						contact.put("homeAddress", rs.getString("home_address"));
-						contact.put("officeAddress", rs.getString("office_address"));
-						contact.put("memo", rs.getString("memo"));
-						contact.put("job", rs.getString("job"));
-						contact.put("jobLevel", rs.getInt("job_level"));
-					}
-				}
-				catch(SQLException sqle)
-				{
-					resp.getWriter().println("Cannot connect to DB");
-					resp.getWriter().println(sqle.getMessage());
-					sqle.printStackTrace();
-				}
-				
-				if(rs != null)
-				{
-					try
-					{
-						rs.close();
-					}
-					catch(SQLException sqle)
-					{
-						
-					}
-				}
-				if(stmt != null)
-				{
-					try
-					{
-						stmt.close();
-					}
-					catch(SQLException sqle)
-					{
-						
-					}
-				}
-				if(conn != null)
-				{
-					try
-					{
-						conn.close();
-					}
-					catch(SQLException sqle)
-					{
-						
-					}
-				}
 				if(contact.get("id") != null)
 				{
 					resp.getWriter().println("id: " + contact.get("id"));
@@ -207,6 +135,82 @@ public class ContactServlet extends HttpServlet
 				}
 			}
 			return contacts;
+		}
+		
+		private Map getContactById(Long id)
+		{
+			Map contact = new HashMap();
+			try
+			{
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+			}
+			catch(Exception ex)
+			{
+				
+			}
+				
+			Connection conn = null;
+			Statement stmt = null;
+			ResultSet rs = null;
+				
+			try
+			{
+				conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=utf-8");
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery("select * from contact where id=" + id);
+				if(rs.next())
+				{
+					contact.put("id", rs.getLong("id"));
+					contact.put("name", rs.getString("name"));
+					contact.put("mobile", rs.getString("mobile"));
+					contact.put("vpmn", rs.getString("vpmn"));
+					contact.put("email", rs.getString("email"));
+					contact.put("homeAddress", rs.getString("home_address"));
+					contact.put("officeAddress", rs.getString("office_address"));
+					contact.put("memo", rs.getString("memo"));
+					contact.put("job", rs.getString("job"));
+					contact.put("jobLevel", rs.getInt("job_level"));
+				}
+			}
+			catch(SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+				
+			if(rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch(SQLException sqle)
+				{
+					
+				}
+			}
+			if(stmt != null)
+			{
+				try
+				{
+					stmt.close();
+				}
+				catch(SQLException sqle)
+				{
+						
+				}
+			}
+			if(conn != null)
+			{
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException sqle)
+				{
+						
+				}
+			}
+			return contact;
 		}
 		
 }
