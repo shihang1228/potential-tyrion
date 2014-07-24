@@ -17,7 +17,9 @@ public class ContactServlet extends HttpServlet
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) 
 	                  throws IOException,ServletException
 		{
-			resp.getWriter().println("get contact by id:" + req.getParameter("contactId"));
+			resp.setContentType("text/html");
+			req.setCharacterEncoding("UTF-8");
+			resp.setCharacterEncoding("UTF-8");
 			
 			try
 			{
@@ -28,10 +30,17 @@ public class ContactServlet extends HttpServlet
 				
 			}
 			
+			Connection conn = null;
+			Statement stmt = null;
+			ResultSet rs = null;
+			
 			try
 			{
-				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=");
-				resp.getWriter().println("connect sussess!!!");
+				conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=utf-8");
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery("select * from contact where id=1");
+				rs.next();
+				resp.getWriter().println(rs.getString("name"));
 			}
 			catch(SQLException sqle)
 			{
