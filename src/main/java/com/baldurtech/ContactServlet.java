@@ -21,6 +21,16 @@ public class ContactServlet extends HttpServlet
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 			
+			if(req.getParameter("contactId") == null)
+			{
+				resp.getWriter().println("get all contacts!!!");
+			}
+			else
+			{
+				resp.getWriter().println("get contact by id: " + req.getParameter("contactId"));
+			}
+			
+			
 			try
 			{
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -52,7 +62,7 @@ public class ContactServlet extends HttpServlet
 				}
 				else
 				{
-					resp.getWriter().println("contact not found!!!");
+					resp.getWriter().println("contact not found!!!.");
 				}
 			}
 			catch(SQLException sqle)
