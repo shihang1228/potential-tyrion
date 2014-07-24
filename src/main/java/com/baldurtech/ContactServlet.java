@@ -151,10 +151,6 @@ public class ContactServlet extends HttpServlet
 						job = rs.getString("job");
 						jobLevel = rs.getInt("job_level");
 					}
-					else
-					{
-						resp.getWriter().println("contact not found!!!.");
-					}
 				}
 				catch(SQLException sqle)
 				{
@@ -196,16 +192,23 @@ public class ContactServlet extends HttpServlet
 						
 					}
 				}
-				resp.getWriter().println("id: " + id);
-				resp.getWriter().println("name: " + name);
-				resp.getWriter().println("mobile: " + mobile);
-				resp.getWriter().println("vpmn: " + vpmn);
-				resp.getWriter().println("email: " + email);
-				resp.getWriter().println("homeAddress: " + homeAddress);
-				resp.getWriter().println("officeAddress: " + officeAddress);
-				resp.getWriter().println("memo: " + memo);
-				resp.getWriter().println("job: " + job);
-				resp.getWriter().println("jobLevel: " + jobLevel);
+				if(id != null)
+				{
+					resp.getWriter().println("id: " + id);
+					resp.getWriter().println("name: " + name);
+					resp.getWriter().println("mobile: " + mobile);
+					resp.getWriter().println("vpmn: " + vpmn);
+					resp.getWriter().println("email: " + email);
+					resp.getWriter().println("homeAddress: " + homeAddress);
+					resp.getWriter().println("officeAddress: " + officeAddress);
+					resp.getWriter().println("memo: " + memo);
+					resp.getWriter().println("job: " + job);
+					resp.getWriter().println("jobLevel: " + jobLevel);
+				}
+				else
+				{
+					resp.getWriter().println("contact not found!!!.");
+				}
 			}
 		}
 		
