@@ -27,14 +27,13 @@ public class ContactServlet extends HttpServlet
 			if(req.getParameter("contactId") == null)
 			{
 				resp.getWriter().println("get all contacts!!!");
-				for(Object obj: getAllContacts())
+				for(Contact contact: getAllContacts())
 				{
-					Map contact = (Map)obj;
-					resp.getWriter().println("id: " + contact.get("id"));
-					resp.getWriter().println("name: " + contact.get("name"));
-					resp.getWriter().println("mobile: " + contact.get("mobile"));
-					resp.getWriter().println("vpmn: " + contact.get("vpmn"));						
-					resp.getWriter().println("job: " + contact.get("job"));
+					resp.getWriter().println("id: " + contact.getId());
+					resp.getWriter().println("name: " + contact.getName());
+					resp.getWriter().println("mobile: " + contact.getMobile());
+					resp.getWriter().println("vpmn: " + contact.getVpmn());						
+					resp.getWriter().println("job: " + contact.getJob());
 				}
 			}
 			else
@@ -61,7 +60,7 @@ public class ContactServlet extends HttpServlet
 				}
 			}
 		}
-		private List getAllContacts()
+		private List<Contact> getAllContacts()
 		{
 			List contacts = new ArrayList();
 			
@@ -85,13 +84,13 @@ public class ContactServlet extends HttpServlet
 				rs = stmt.executeQuery("select * from contact");
 				while(rs.next())
 				{
-					Map contact = new HashMap();
+					Contact contact = new Contact();
 					
-					contact.put("id",rs.getLong("id"));
-					contact.put("name", rs.getString("name"));
-					contact.put("mobile", rs.getString("mobile"));
-					contact.put("vpmn", rs.getString("vpmn"));
-					contact.put("job", rs.getString("job"));
+					contact.setId(rs.getLong("id"));
+					contact.setName(rs.getString("name"));
+					contact.setMobile(rs.getString("mobile"));
+					contact.setVpmn(rs.getString("vpmn"));
+					contact.setJob(rs.getString("job"));
 					
 					contacts.add(contact);
 				}
