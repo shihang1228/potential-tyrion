@@ -39,15 +39,21 @@ public class ContactServlet extends HttpServlet
 				conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=utf-8");
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery("select * from contact where id=" + req.getParameter("contactId"));
-				rs.next();
-				resp.getWriter().println("id: " + rs.getString("id"));
-				resp.getWriter().println("name: " + rs.getString("name"));
-				resp.getWriter().println("mobile: " + rs.getString("mobile"));
-				resp.getWriter().println("vpmn: " + rs.getString("vpmn"));
-				resp.getWriter().println("email: " + rs.getString("email"));
-				resp.getWriter().println("homeAddress: " + rs.getString("home_address"));
-				resp.getWriter().println("officeAddress: " + rs.getString("office_address"));
-				resp.getWriter().println("memo: " + rs.getString("memo"));
+				if(rs.next())
+				{
+					resp.getWriter().println("id: " + rs.getString("id"));
+					resp.getWriter().println("name: " + rs.getString("name"));
+					resp.getWriter().println("mobile: " + rs.getString("mobile"));
+					resp.getWriter().println("vpmn: " + rs.getString("vpmn"));
+					resp.getWriter().println("email: " + rs.getString("email"));
+					resp.getWriter().println("homeAddress: " + rs.getString("home_address"));
+					resp.getWriter().println("officeAddress: " + rs.getString("office_address"));
+					resp.getWriter().println("memo: " + rs.getString("memo"));
+				}
+				else
+				{
+					resp.getWriter().println("contact not found!!!");
+				}
 			}
 			catch(SQLException sqle)
 			{
