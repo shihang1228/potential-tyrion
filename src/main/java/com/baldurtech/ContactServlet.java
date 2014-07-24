@@ -10,7 +10,10 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContactServlet extends HttpServlet
 {
@@ -24,6 +27,7 @@ public class ContactServlet extends HttpServlet
 			if(req.getParameter("contactId") == null)
 			{
 				resp.getWriter().println("get all contacts!!!");
+				List contacts = new ArrayList();
 				
 				try
 				{
@@ -45,16 +49,19 @@ public class ContactServlet extends HttpServlet
 					rs = stmt.executeQuery("select * from contact");
 					while(rs.next())
 					{
-						resp.getWriter().println("id: " + rs.getLong("id"));
-						resp.getWriter().println("name: " + rs.getString("name"));
-						resp.getWriter().println("mobile: " + rs.getString("mobile"));
-						resp.getWriter().println("vpmn: " + rs.getString("vpmn"));
-						resp.getWriter().println("email: " + rs.getString("email"));
-						resp.getWriter().println("homeAddress: " + rs.getString("home_address"));
-						resp.getWriter().println("officeAddress: " + rs.getString("office_address"));
-						resp.getWriter().println("memo: " + rs.getString("memo"));
-						resp.getWriter().println("job: " + rs.getString("job"));
-						resp.getWriter().println("jobLevel: " + rs.getInt("job_level"));
+						Map contact = new HashMap();
+						contact.put("id", rs.getLong("id"));
+						contact.put("name", rs.getString("name"));
+						contact.put("mobile", rs.getString("mobile"));
+						contact.put("vpmn", rs.getString("vpmn"));
+						contact.put("job", rs.getString("job"));
+						
+						contacts.add(contact);
+						resp.getWriter().println("id: " + contact.get("id"));
+						resp.getWriter().println("name: " + contact.get("name"));
+						resp.getWriter().println("mobile: " + contact.get("mobile"));
+						resp.getWriter().println("vpmn: " + contact.get("vpmn"));						
+						resp.getWriter().println("job: " + contact.get("job"));
 					}
 					
 				}
