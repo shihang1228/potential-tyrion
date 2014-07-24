@@ -39,20 +39,20 @@ public class ContactServlet extends HttpServlet
 			else
 			{
 				resp.getWriter().println("get contact by id: " + req.getParameter("contactId"));
-				Map contact = getContactById(Long.valueOf(req.getParameter("contactId")));
+				Contact contact = getContactById(Long.valueOf(req.getParameter("contactId")));
 				
-				if(contact.get("id") != null)
+				if(contact.getId() != null)
 				{
-					resp.getWriter().println("id: " + contact.get("id"));
-					resp.getWriter().println("name: " + contact.get("name"));
-					resp.getWriter().println("mobile: " + contact.get("mobile"));
-					resp.getWriter().println("vpmn: " + contact.get("vpmn"));
-					resp.getWriter().println("email: " + contact.get("email"));
-					resp.getWriter().println("homeAddress: " + contact.get("homeAddress"));
-					resp.getWriter().println("officeAddress: " + contact.get("officeAddress"));
-					resp.getWriter().println("memo: " + contact.get("memo"));
-					resp.getWriter().println("job: " + contact.get("job"));
-					resp.getWriter().println("jobLevel: " + contact.get("jobLevel"));
+					resp.getWriter().println("id: " + contact.getId());
+					resp.getWriter().println("name: " + contact.getName());
+					resp.getWriter().println("mobile: " + contact.getMobile());
+					resp.getWriter().println("vpmn: " + contact.getVpmn());
+					resp.getWriter().println("email: " + contact.getEmail());
+					resp.getWriter().println("homeAddress: " + contact.getHomeAddress());
+					resp.getWriter().println("officeAddress: " + contact.getOfficeAddress());
+					resp.getWriter().println("memo: " + contact.getMemo());
+					resp.getWriter().println("job: " + contact.getJob());
+					resp.getWriter().println("jobLevel: " + contact.getJobLevel());
 				}
 				else
 				{
@@ -136,9 +136,9 @@ public class ContactServlet extends HttpServlet
 			return contacts;
 		}
 		
-		private Map getContactById(Long id)
+		private Contact getContactById(Long id)
 		{
-			Map contact = new HashMap();
+			Contact contact = new Contact();
 			try
 			{
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -159,16 +159,16 @@ public class ContactServlet extends HttpServlet
 				rs = stmt.executeQuery("select * from contact where id=" + id);
 				if(rs.next())
 				{
-					contact.put("id", rs.getLong("id"));
-					contact.put("name", rs.getString("name"));
-					contact.put("mobile", rs.getString("mobile"));
-					contact.put("vpmn", rs.getString("vpmn"));
-					contact.put("email", rs.getString("email"));
-					contact.put("homeAddress", rs.getString("home_address"));
-					contact.put("officeAddress", rs.getString("office_address"));
-					contact.put("memo", rs.getString("memo"));
-					contact.put("job", rs.getString("job"));
-					contact.put("jobLevel", rs.getInt("job_level"));
+					contact.setId(rs.getLong("id"));
+					contact.setName(rs.getString("name"));
+					contact.setMobile(rs.getString("mobile"));
+					contact.setVpmn(rs.getString("vpmn"));
+					contact.setEmail(rs.getString("email"));
+					contact.setHomeAddress(rs.getString("home_address"));
+					contact.setOfficeAddress(rs.getString("office_address"));
+					contact.setMemo(rs.getString("memo"));
+					contact.setJob(rs.getString("job"));
+					contact.setJobLevel(rs.getInt("job_level"));
 				}
 			}
 			catch(SQLException sqle)
