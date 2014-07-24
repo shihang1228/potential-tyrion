@@ -40,16 +40,7 @@ public class ContactServlet extends HttpServlet
 			else
 			{
 				resp.getWriter().println("get contact by id: " + req.getParameter("contactId"));
-				Long id = null;
-				String name = null;
-				String mobile = null;
-				String vpmn = null;
-				String email = null;
-				String homeAddress = null;
-				String officeAddress = null;
-				String memo = null;
-				String job = null;
-				int jobLevel = 0;
+				Map contact = new HashMap();
 
 				try
 				{
@@ -71,16 +62,16 @@ public class ContactServlet extends HttpServlet
 					rs = stmt.executeQuery("select * from contact where id=" + req.getParameter("contactId"));
 					if(rs.next())
 					{
-						id = rs.getLong("id");
-						name = rs.getString("name");
-						mobile = rs.getString("mobile");
-						vpmn = rs.getString("vpmn");
-						email = rs.getString("email");
-						homeAddress = rs.getString("home_address");
-						officeAddress = rs.getString("office_address");
-						memo = rs.getString("memo");
-						job = rs.getString("job");
-						jobLevel = rs.getInt("job_level");
+						contact.put("id", rs.getLong("id"));
+						contact.put("name", rs.getString("name"));
+						contact.put("mobile", rs.getString("mobile"));
+						contact.put("vpmn", rs.getString("vpmn"));
+						contact.put("email", rs.getString("email"));
+						contact.put("homeAddress", rs.getString("home_address"));
+						contact.put("officeAddress", rs.getString("office_address"));
+						contact.put("memo", rs.getString("memo"));
+						contact.put("job", rs.getString("job"));
+						contact.put("jobLevel", rs.getInt("job_level"));
 					}
 				}
 				catch(SQLException sqle)
@@ -123,18 +114,18 @@ public class ContactServlet extends HttpServlet
 						
 					}
 				}
-				if(id != null)
+				if(contact.get("id") != null)
 				{
-					resp.getWriter().println("id: " + id);
-					resp.getWriter().println("name: " + name);
-					resp.getWriter().println("mobile: " + mobile);
-					resp.getWriter().println("vpmn: " + vpmn);
-					resp.getWriter().println("email: " + email);
-					resp.getWriter().println("homeAddress: " + homeAddress);
-					resp.getWriter().println("officeAddress: " + officeAddress);
-					resp.getWriter().println("memo: " + memo);
-					resp.getWriter().println("job: " + job);
-					resp.getWriter().println("jobLevel: " + jobLevel);
+					resp.getWriter().println("id: " + contact.get("id"));
+					resp.getWriter().println("name: " + contact.get("name"));
+					resp.getWriter().println("mobile: " + contact.get("mobile"));
+					resp.getWriter().println("vpmn: " + contact.get("vpmn"));
+					resp.getWriter().println("email: " + contact.get("email"));
+					resp.getWriter().println("homeAddress: " + contact.get("homeAddress"));
+					resp.getWriter().println("officeAddress: " + contact.get("officeAddress"));
+					resp.getWriter().println("memo: " + contact.get("memo"));
+					resp.getWriter().println("job: " + contact.get("job"));
+					resp.getWriter().println("jobLevel: " + contact.get("jobLevel"));
 				}
 				else
 				{
