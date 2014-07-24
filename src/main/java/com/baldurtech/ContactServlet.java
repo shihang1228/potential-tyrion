@@ -57,11 +57,6 @@ public class ContactServlet extends HttpServlet
 						contact.put("job", rs.getString("job"));
 						
 						contacts.add(contact);
-						resp.getWriter().println("id: " + contact.get("id"));
-						resp.getWriter().println("name: " + contact.get("name"));
-						resp.getWriter().println("mobile: " + contact.get("mobile"));
-						resp.getWriter().println("vpmn: " + contact.get("vpmn"));						
-						resp.getWriter().println("job: " + contact.get("job"));
 					}
 					
 				}
@@ -104,6 +99,15 @@ public class ContactServlet extends HttpServlet
 					{
 						
 					}
+				}
+				for(Object obj: contacts)
+				{
+					Map contact = (Map)obj;
+					resp.getWriter().println("id: " + contact.get("id"));
+					resp.getWriter().println("name: " + contact.get("name"));
+					resp.getWriter().println("mobile: " + contact.get("mobile"));
+					resp.getWriter().println("vpmn: " + contact.get("vpmn"));						
+					resp.getWriter().println("job: " + contact.get("job"));
 				}
 			}
 			else
