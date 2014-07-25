@@ -127,39 +127,7 @@ public class ContactServlet extends HttpServlet
 	}
 	public void closeDatabaseManager(DatabaseManager db)
 	{
-		if(db.rs != null)
-		{
-			try
-			{
-				db.rs.close();
-			}
-			catch(SQLException sqle)
-			{
-			
-			}
-		}
-		if(db.stmt != null)
-		{
-			try
-			{
-				db.stmt.close();
-			}
-			catch(SQLException sqle)
-			{
-				
-			}
-		}
-		if(db.conn != null)
-		{
-			try
-			{
-				db.conn.close();
-			}
-			catch(SQLException sqle)
-			{
-				
-			}
-		}
+		db.close();
 	}
 		
 }
@@ -193,6 +161,43 @@ class DatabaseManager
 			sqle.printStackTrace();
 		}
 		return this;
+	}
+	
+	public void close()
+	{
+		if(rs != null)
+		{
+			try
+			{
+				rs.close();
+			}
+			catch(SQLException sqle)
+			{
+			
+			}
+		}
+		if(stmt != null)
+		{
+			try
+			{
+				stmt.close();
+			}
+			catch(SQLException sqle)
+			{
+				
+			}
+		}
+		if(conn != null)
+		{
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException sqle)
+			{
+				
+			}
+		}
 	}
 	
 }
