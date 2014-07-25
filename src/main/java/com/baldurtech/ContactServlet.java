@@ -64,27 +64,8 @@ public class ContactServlet extends HttpServlet
 		{
 			List contacts = new ArrayList();
 			String sql = "select * from contact";
-			try
-			{
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			}
-			catch(Exception ex)
-			{
-				
-			}
 			
-			DatabaseManager db = new DatabaseManager();
-			
-			try
-			{
-				db.conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=UTF-8");
-				db.stmt = db.conn.createStatement();
-				db.rs = db.stmt.executeQuery(sql);
-			}
-			catch(SQLException sqle)
-			{
-				sqle.printStackTrace();
-			}
+			DatabaseManager db = createDatabaseConnectionAndExecute(sql);
 			try
 			{
 				while(db.rs.next())
@@ -218,6 +199,32 @@ public class ContactServlet extends HttpServlet
 			return contact;
 		}
 		
+	public DatabaseManager createDatabaseConnectionAndExecute(String sql)
+	{
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		}
+		catch(Exception ex)
+		{
+				
+		}
+			
+		DatabaseManager db = new DatabaseManager();
+			
+		try
+		{
+			db.conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=UTF-8");
+			db.stmt = db.conn.createStatement();
+			db.rs = db.stmt.executeQuery(sql);
+		}
+		catch(SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		return db;
+	}
+		
 }
 
 class DatabaseManager
@@ -225,4 +232,5 @@ class DatabaseManager
 	Connection conn;
 	Statement stmt;
 	ResultSet rs;
+	
 }
