@@ -85,70 +85,17 @@ public class ContactServlet extends HttpServlet
 		}
 		
 		private Contact getContactById(Long id)
-		{
-			Contact contact = null;
-			try
+		{		
+			List<Contact> contacts = findAllContactsBySql("select * from contact where id = " + id);
+			
+			if(contacts.size() > 0)
 			{
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
+				return contacts.get(0);
 			}
-			catch(Exception ex)
+			else
 			{
-				
+				return null;
 			}
-				
-			Connection conn = null;
-			Statement stmt = null;
-			ResultSet rs = null;
-				
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=utf-8");
-				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select * from contact where id=" + id);
-				if(rs.next())
-				{
-					contact = createContactFromResultSet(rs);
-				}
-			}
-			catch(SQLException sqle)
-			{
-				sqle.printStackTrace();
-			}
-				
-			if(rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch(SQLException sqle)
-				{
-					
-				}
-			}
-			if(stmt != null)
-			{
-				try
-				{
-					stmt.close();
-				}
-				catch(SQLException sqle)
-				{
-						
-				}
-			}
-			if(conn != null)
-			{
-				try
-				{
-					conn.close();
-				}
-				catch(SQLException sqle)
-				{
-						
-				}
-			}
-			return contact;
 		}
 		
 		public Contact createContactFromResultSet(ResultSet rs) throws SQLException
