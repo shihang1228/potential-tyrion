@@ -82,10 +82,16 @@ public class ContactServlet extends HttpServlet
 				conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=UTF-8");
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery("select * from contact");
+			}
+			catch(SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+			try
+			{
 				while(rs.next())
 				{
-					Contact contact = createContactFromResultSet(rs);
-					contacts.add(contact);
+					contacts.add(createContactFromResultSet(rs));
 				}
 			}
 			catch(SQLException sqle)
