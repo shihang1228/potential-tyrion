@@ -121,27 +121,8 @@ public class ContactServlet extends HttpServlet
 		
 	public DatabaseManager createDatabaseConnectionAndExecute(String sql)
 	{
-		try
-		{
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		}
-		catch(Exception ex)
-		{
-				
-		}
-			
 		DatabaseManager db = new DatabaseManager();
-			
-		try
-		{
-			db.conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=UTF-8");
-			db.stmt = db.conn.createStatement();
-			db.rs = db.stmt.executeQuery(sql);
-		}
-		catch(SQLException sqle)
-		{
-			sqle.printStackTrace();
-		}
+		db.execute(sql);
 		return db;
 	}
 	public void closeDatabaseManager(DatabaseManager db)
@@ -188,5 +169,30 @@ class DatabaseManager
 	Connection conn;
 	Statement stmt;
 	ResultSet rs;
+	
+	public DatabaseManager execute(String sql)
+	{
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		}
+		catch(Exception ex)
+		{
+				
+		}
+		
+		try
+		{
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=UTF-8");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+		}
+		catch(SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		return this;
+	}
 	
 }
