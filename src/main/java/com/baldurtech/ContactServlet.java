@@ -63,7 +63,7 @@ public class ContactServlet extends HttpServlet
 		private List<Contact> getAllContacts()
 		{
 			List contacts = new ArrayList();
-			
+			String sql = "select * from contact";
 			try
 			{
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -73,15 +73,13 @@ public class ContactServlet extends HttpServlet
 				
 			}
 			
-			Connection conn = null;
-			Statement stmt = null;
-			ResultSet rs = null;
+			DatabaseManager db = new DatabaseManager();
 			
 			try
 			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=UTF-8");
-				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select * from contact");
+				db.conn = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=&useUnicode=true&characterEncoding=UTF-8");
+				db.stmt = db.conn.createStatement();
+				db.rs = db.stmt.executeQuery(sql);
 			}
 			catch(SQLException sqle)
 			{
@@ -89,9 +87,9 @@ public class ContactServlet extends HttpServlet
 			}
 			try
 			{
-				while(rs.next())
+				while(db.rs.next())
 				{
-					contacts.add(createContactFromResultSet(rs));
+					contacts.add(createContactFromResultSet(db.rs));
 				}
 			}
 			catch(SQLException sqle)
@@ -99,33 +97,33 @@ public class ContactServlet extends HttpServlet
 				sqle.printStackTrace();
 			}
 			
-			if(rs != null)
+			if(db.rs != null)
 			{
 				try
 				{
-					rs.close();
+					db.rs.close();
 				}
 				catch(SQLException sqle)
 				{
 				
 				}
 			}
-			if(stmt != null)
+			if(db.stmt != null)
 			{
 				try
 				{
-					stmt.close();
+					db.stmt.close();
 				}
 				catch(SQLException sqle)
 				{
 				
 				}
 			}
-			if(conn != null)
+			if(db.conn != null)
 			{
 				try
 				{
-					conn.close();
+					db.conn.close();
 				}
 				catch(SQLException sqle)
 				{
@@ -220,4 +218,11 @@ public class ContactServlet extends HttpServlet
 			return contact;
 		}
 		
+}
+
+class DatabaseManager
+{
+	Connection conn;
+	Statement stmt;
+	ResultSet rs;
 }
