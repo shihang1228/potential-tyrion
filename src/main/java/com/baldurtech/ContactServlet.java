@@ -41,7 +41,7 @@ public class ContactServlet extends HttpServlet
 				resp.getWriter().println("get contact by id: " + req.getParameter("contactId"));
 				Contact contact = getContactById(Long.valueOf(req.getParameter("contactId")));
 				
-				if(contact.getId() != null)
+				if(contact != null)
 				{
 					resp.getWriter().println("id: " + contact.getId());
 					resp.getWriter().println("name: " + contact.getName());
@@ -131,7 +131,7 @@ public class ContactServlet extends HttpServlet
 		
 		private Contact getContactById(Long id)
 		{
-			Contact contact = new Contact();
+			Contact contact = null;
 			try
 			{
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
