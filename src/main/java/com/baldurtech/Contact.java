@@ -94,4 +94,9 @@ public class Contact
 		this.jobLevel = jobLevel;
 	}
 	
+	public String toString()
+	{
+		return name;
+	}
+	
 }
