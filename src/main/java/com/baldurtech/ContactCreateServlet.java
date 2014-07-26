@@ -10,6 +10,6 @@ public class ContactCreateServlet extends HttpServlet
 {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,ServletException
 	{
-		resp.getWriter().println("create contact!!!");
+		getServletContext().getRequestDispatcher("/WEB-INF/contact/create.jsp").forward(req, resp);
 	}
 }
