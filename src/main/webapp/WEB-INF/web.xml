@@ -16,5 +16,14 @@
 		<servlet-name>contact</servlet-name>
 		<url-pattern>/contact</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+	<servlet-name>contactCreate</servlet-name>
+	<servlet-class>com.baldurtech.ContactCreateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>contactCreate</servlet-name>
+	<url-pattern>/contact/create</url-pattern>
+	</servlet-mapping>
 
 </web-app>
